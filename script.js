@@ -11,65 +11,76 @@ function playRound(humanChoice, computerChoice){
         switch (computerChoice){
             case "paper":
                 gameMessage.textContent= "Computer wins this round.";
-                return "computer";
+                computerScore++;
+                return "Computer";
             case "scissors":
                 gameMessage.textContent= "You wins this round.";
+                humanScore++;
                 return "Human";
         }
     }else if (humanChoice=="paper"){
         switch (computerChoice){
             case "scissors":
                 gameMessage.textContent= "Computer wins this round.";
-                return "computer";
+                computerScore++;
+                return "Computer";
             case "rock":
                 gameMessage.textContent= "You wins this round.";
+                humanScore++;
                 return "Human";
         }
-
     }else if (humanChoice=="scissors"){
         switch (computerChoice){
             case "rock":
                 gameMessage.textContent= "Computer wins this round.";
-                return "computer";
+                computerScore++;
+                return "Computer";
             case "paper":
                 gameMessage.textContent= "You wins this round.";
+                humanScore++;
                 return "Human";
         }
 
     }
 };
-function playGame(max){
-    let maxScore = max;
-    let humanScore = 0;
-    let computerScore = 0;
-    console.log("1. Rock, 2. Paper. 3 Scissors.");
-    do{
-        let humanChoice = getHumanChoice()
-        let computerChoice = getComputerChoice()
-        result = playRound(humanChoice, computerChoice);
-        if(result=="Human"){
-            humanScore++;
-            console.log(`Human chose ${humanChoice}, Computer chose ${computerChoice}. ${result} is the winner.`);
-            console.log(`Score is Human: ${humanScore}, Computer: ${computerScore}`);
-        }else if(result=="Computer"){
-            computerScore++;
-            console.log(`Human chose ${humanChoice}, Computer chose ${computerChoice}. ${result} is the winner.`);
-            console.log(`Score is Human: ${humanScore}, Computer: ${computerScore}`);
-        }else{
-            console.log(`Human chose ${humanChoice}, Computer chose ${computerChoice}. It's a tie.`);
-            console.log(`Score is Human: ${humanScore}, Computer: ${computerScore}`);
+function playGame(choice){
+    let humanChoice = choice;
+    let computerChoice = getComputerChoice();
+    let result = playRound(humanChoice, computerChoice);
+    if (humanScore == maxScore || computerScore == maxScore){
+        gameMessage.textContent = `${result} is the winner! The Score was Human:${humanScore}, Computer:${computerScore}. Make a selection to start a new game.`;
+        humanScore = 0;
+        computerScore = 0;
+    }else{ 
+        switch (result){
+            case "Human":
+                gameMessage.textContent = `Human chose ${humanChoice}, Computer chose ${computerChoice}. 
+                ${result} is the winner. Score is Human: ${humanScore}, Computer: ${computerScore}`;
+                break;
+            case "Computer":
+                gameMessage.textContent = `Human chose ${humanChoice}, Computer chose ${computerChoice}. 
+                ${result} is the winner. Score is Human: ${humanScore}, Computer: ${computerScore}`;
+                break;
+            case "tie":
+                gameMessage.textContent = `Human chose ${humanChoice}, Computer chose ${computerChoice}. 
+                It's a tie. Score is Human: ${humanScore}, Computer: ${computerScore}`;
+                break;
         }
-    }while(humanScore<maxScore && computerScore<maxScore);
-    console.log("Game over.")
+    }
+
+    
+    
 };
 
 const buttons = document.querySelectorAll("button");
 const gameMessage = document.querySelector("#gameMessage");
+let humanScore = 0;
+let computerScore = 0;
+let maxScore = 5;
 
 buttons.forEach((button)=>{
     button.addEventListener("click",()=>{
-        playRound(button.textContent.toLowerCase(), getComputerChoice());
-        // gameMessage.textContent = button.textContent.toLowerCase();
+        playGame(button.textContent.toLowerCase());
     });
 });
 
