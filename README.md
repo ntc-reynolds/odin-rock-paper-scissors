@@ -2,6 +2,8 @@
 
 This is my take on a simple rock paper scissors game as outlined in The Odin Project. Everything was (poorly) written by hand.
 
+During this exercise, I had the opportunity to learn about creating, managing and merging git branches.
+
 ## Features
 
 - Play a classic game of Rock Paper Scissors against the computer.
